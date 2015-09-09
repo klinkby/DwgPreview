@@ -1,0 +1,23 @@
+﻿.dwg-preview {
+    width: 100%;
+    max-width: 512px;
+    max-height: 512px;
+}
+
+#licenseMessage {
+    display: none;
+    font-weight: bold;
+    color: red;
+}
+
+.license-invalid #licenseMessage {
+    display: block;
+}
+
+.license-invalid #closeDialog {
+    display: block!important;
+}
+
+.license-invalid .app-container {
+    display: none;
+}

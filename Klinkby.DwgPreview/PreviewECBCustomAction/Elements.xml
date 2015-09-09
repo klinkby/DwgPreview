@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <CustomAction Id="24dc509d-4c99-4c3e-b69c-f0a481b5c2ce.PreviewECBCustomAction"
+                RegistrationType="FileType"
+                RegistrationId="dwg"
+                Location="EditControlBlock"
+                Sequence="10001"
+                Title="Preview"
+                HostWebDialog="TRUE"
+                HostWebDialogHeight="512"
+                HostWebDialogWidth="512">
+    <UrlAction Url="~appWebUrl/Pages/Preview.aspx?{StandardTokens}&amp;SPItemUrl={ItemUrl}" />
+  </CustomAction>
+</Elements>

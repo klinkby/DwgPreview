@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package dslVersion="1.0.0.0" 
+        Id="108a1f43-4897-46c5-b1ac-d542d96509b1" 
+        solutionId="108a1f43-4897-46c5-b1ac-d542d96509b1" 
+        xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel" 
+        name="Klinkby.DwgPreview"
+        sharePointProductVersion="15.0">
+  <features>
+        <featureReference itemId="089e47de-0911-4148-800e-84ee6cdeef80" />
+  </features>
+</package>
