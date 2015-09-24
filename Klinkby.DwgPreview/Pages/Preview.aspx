@@ -8,7 +8,7 @@
 <%-- The markup and script in the following Content element will be placed in the <head> of the page --%>
 <asp:Content ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
     <WebPartPages:AllowFraming runat="server" /> <%--  allow HostWebDialog=TRUE --%>
-    <meta name="WebPartPageExpansion" content="full" />
+<%--    <xmeta name="WebPartPageExpansion" content="full" />--%>
     <link rel="Stylesheet" type="text/css" href="../Content/App.css" />
     <style type="text/css">
         #s4-ribbonrow { display: none; }
@@ -17,17 +17,17 @@
 
 <%-- The markup in the following Content element will be placed in the TitleArea of the page --%>
 <asp:Content ContentPlaceHolderID="PlaceHolderPageTitleInTitleArea" runat="server">
-    Klinkby DWG Preview
+    <span id="appTitle"></span>
 </asp:Content>
 
 <%-- The markup and script in the following Content element will be placed in the <body> of the page --%>
 <asp:Content ContentPlaceHolderID="PlaceHolderMain" runat="server">
     <div class="app-container">
 		<img id="preview" class="dwg-preview" />
-		<div id="caption" class="dwg-caption">Initializing&hellip;</div>
+		<div id="caption" class="dwg-caption">&hellip;</div>
 	</div>
     <div id="licenseMessage"></div>
-    <button id="closeDialog">Close</button>
+    <button id="closeDialog" class="dwg-close"></button>
     <script type="text/javascript" src="../Scripts/App.js" async="async"></script>
     <script type="text/javascript" src="../Scripts/Licensing.js" async="async"></script>
 </asp:Content>

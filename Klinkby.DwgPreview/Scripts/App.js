@@ -7,6 +7,99 @@
 (function () {
     "use strict";
 
+    function getQueryStringValue(key) {
+        var res = new RegExp("(?:[\?&]" + encodeURIComponent(key) + "=)([^&]+)").exec(location.search);
+        return null !== res && 2 === res.length ? decodeURIComponent(res[1]) : null;
+    }
+
+    function getResources(language) {
+        var l10n = {
+            "da-DK": {
+                appTitle: "Klinkby DWG Eksempel",
+                badDrawing: "Desværre kan tegningen ikke vises i denne browser.",
+                close: "Luk",
+                initializing: "Initializerer\u2026",
+                loading: "Indlæser\u2026",
+                parsing: "Analyserer\u2026"
+            },
+            "de-DE": {
+                appTitle: "Klinkby DWG Vorschau",
+                badDrawing: "Leider ist die Zeichnung nicht in diesem Browser betrachtet werden.",
+                close: "Schließe",
+                initializing: "Initialisieren\u2026",
+                loading: "Laden\u2026",
+                parsing: "Parsen\u2026"
+            },
+            "en-GB": {
+                appTitle: "Klinkby DWG Preview",
+                badDrawing: "Unfortunately the drawing cannot be previewed in this browser.",
+                close: "Close",
+                initializing: "Initializing\u2026",
+                loading: "Loading\u2026",
+                parsing: "Parsing\u2026"
+            },
+            "en-US": {
+                appTitle: "Klinkby DWG Preview",
+                badDrawing: "Unfortunately the drawing cannot be previewed in this browser.",
+                close: "Close",
+                initializing: "Initializing\u2026",
+                loading: "Loading\u2026",
+                parsing: "Parsing\u2026"
+            },
+            "es-ES": {
+                appTitle: "Klinkby DWG Vista Previa",
+                badDrawing: "Por desgracia, el dibujo no se puede previsualizar en este navegador.",
+                close: "Cerrar",
+                initializing: "Inicialización\u2026",
+                loading: "Cargando\u2026",
+                parsing: "Análisis\u2026"
+            },
+            "fr-FR": {
+                appTitle: "Klinkby Aperçu de DWG",
+                badDrawing: "Malheureusement, le plan ne peut être prévisualisé dans ce navigateur.",
+                close: "Ferme",
+                initializing: "Initialisation\u2026",
+                loading: "Chargement\u2026",
+                parsing: "Parsing\u2026"
+            },
+            "nn-NO": {
+                appTitle: "Klinkby DWG Forhåndsvisning",
+                badDrawing: "Dessverre tegningen kan ikke forhåndsvises i denne nettleseren.",
+                close: "Lukk",
+                initializing: "Initialisering\u2026",
+                loading: "Laster\u2026",
+                parsing: "Parsing\u2026"
+            },
+            "sv-SE": {
+                appTitle: "Klinkby DWG Visning",
+                badDrawing: "Tyvärr ritningen kan inte förhandsgranskas i den här webbläsaren.",
+                close: "Stäng",
+                initializing: "Initierar\u2026",
+                loading: "Läser\u2026",
+                parsing: "Parsning\u2026"
+            }
+        };
+        return l10n[lang] || l10n["en-US"]
+    }
+
+    var lang = getQueryStringValue("SPLanguage"),
+        resx = getResources(lang),
+        elements = {
+            caption: document.getElementById("caption"),
+            appTitle: document.getElementById("appTitle"),
+            preview: document.getElementById("preview"),
+            closeDialog: document.getElementById("closeDialog"),
+            hostCss: document.getElementById("hostCss")
+        };
+
+    appTitle.innerHTML = resx.appTitle;
+    if (hostCss) {
+        hostCss.innerHTML = getQueryStringValue("SPAppWebUrl") + "/Content/Host.css";
+    }
+    if (null === elements.closeDialog) return;
+    closeDialog.innerHTML = resx.close;
+    caption.innerHTML = resx.initializing;
+
     /**
      * Base64 encodes an ArrayBuffer. Hat tip to https://gist.github.com/jonleighton/958841
      * @param {ArrayBuffer} arrayBuffer
@@ -20,7 +113,7 @@
           byteRemainder = byteLength % 3,
           mainLength = byteLength - byteRemainder,
           a, b, c, d,
-          chunk;
+          chunk;3
         // Main loop deals with bytes in chunks of 3
         for (var i = 0; i < mainLength; i = i + 3) {
             // Combine the three bytes into a single integer
@@ -121,17 +214,13 @@
             headerLength = bytes.getInt32(offset, true);
             offset += 4;
             switch (imageCode) {
-                case 2: // BMP Preview (2010-2012 file format)
+                case 2: // BMP Preview (up to 2012 file format)
                     return "data:image/bmp;base64," + base64ArrayBuffer(readBmp(headerStart, headerLength));
-                    break;
                 case 3:
                     return;
-                    break;
                 case 6: // PNG Preview (2013 file format)
                     return "data:image/png;base64," + base64ArrayBuffer(readPng(headerStart, headerLength));
-                    break;
                 default:
-                    break;
             }
         }
     }
@@ -156,10 +245,8 @@
      * @param {String} filePath
      */
     function previewRemoteDwgFile() {
-        var caption = document.getElementById("caption"),
-            img = document.getElementById("preview"),
-            queryString = {};
-        caption.innerHTML = "Loading&hellip;";
+        var queryString = {};
+        elements.caption.innerHTML = resx.loading;
 
         /**
          * Convert a (binary) string to an ArrayBuffer
@@ -187,9 +274,9 @@
          * Displays an image format error message
          */
         function badImage() {
-            img.style.display = "none";
-            caption.innerHTML = "Sorry, the drawing cannot be previewed in this browser.";
-            document.getElementById("closeDialog").style.display = caption.style.display = "initial";
+            elements.preview.style.display = "none";
+            elements.caption.innerHTML = resx.badDrawing;
+            elements.closeDialog.style.display = elements.caption.style.display = "initial";
         }
 
         /**
@@ -197,13 +284,12 @@
          * @param {Object} data
          */
         function readContents(data) {
+            elements.caption.innerHTML = resx.parsing;
             var arrBuf = stringToArrayBuffer(data.body);
-            caption.innerHTML = "Parsing&hellip;";
-            document.getElementById("closeDialog").style.display = "none";
-            caption.innerHTML = "";
-            caption.style.display = "none";
-            img.addEventListener("error", badImage);
-            img.src = dwgToDataURI(arrBuf);
+            elements.closeDialog.style.display = elements.caption.style.display = "none";
+            elements.preview.addEventListener("error", badImage);
+            elements.caption.innerHTML = "";
+            elements.preview.src = dwgToDataURI(arrBuf);
         }
 
         // parse query string
@@ -238,7 +324,8 @@
         var target = parent.postMessage ? parent : (parent.document.postMessage ? parent.document : undefined);
         target.postMessage('CloseCustomActionDialogNoRefresh', '*');
     }
-    document.getElementById("closeDialog").addEventListener("click", closeParentDialog);
+
+    elements.closeDialog.addEventListener("click", closeParentDialog);
 
     // wait for SP lazy loaders
     window.ExecuteOrDelayUntilScriptLoaded(function () {

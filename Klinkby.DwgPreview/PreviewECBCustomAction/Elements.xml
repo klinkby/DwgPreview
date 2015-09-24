@@ -5,10 +5,10 @@
                 RegistrationId="dwg"
                 Location="EditControlBlock"
                 Sequence="10001"
-                Title="Preview"
+                Title="$Resources:Preview;"
                 HostWebDialog="TRUE"
-                HostWebDialogHeight="512"
-                HostWebDialogWidth="512">
+                HostWebDialogHeight="384"
+                HostWebDialogWidth="384">
     <UrlAction Url="~appWebUrl/Pages/Preview.aspx?{StandardTokens}&amp;SPItemUrl={ItemUrl}" />
   </CustomAction>
 </Elements>

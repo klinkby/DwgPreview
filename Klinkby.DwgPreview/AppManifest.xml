@@ -7,8 +7,19 @@
      SharePointMinVersion="15.0.0.0"
 >
   <Properties>
-    <Title>Klinkby.DwgPreview</Title>
+    <Title>$Resources:AppTitle;</Title>
     <StartPage>~appWebUrl/Pages/Default.aspx?{StandardTokens}</StartPage>
+    <SupportedLocales>
+      <SupportedLocale CultureName="fr-FR" />
+      <SupportedLocale CultureName="en-US" />
+      <SupportedLocale CultureName="da-DK" />
+      <SupportedLocale CultureName="es-ES" />
+      <SupportedLocale CultureName="no" />
+      <SupportedLocale CultureName="en-GB" />
+      <SupportedLocale CultureName="sv-SE" />
+      <SupportedLocale CultureName="de-DE" />
+      <SupportedLocale CultureName="nn-NO" />
+    </SupportedLocales>
   </Properties>
 
   <RemoteEndpoints>
@@ -18,6 +29,7 @@
   <AppPrincipal>
     <Internal />
   </AppPrincipal>
+  
   <AppPermissionRequests>
     <AppPermissionRequest Scope="http://sharepoint/content/sitecollection/web" Right="Read" />
   </AppPermissionRequests>
