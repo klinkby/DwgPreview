@@ -18,6 +18,8 @@
                 appTitle: "Klinkby DWG Eksempel",
                 badDrawing: "Desværre kan tegningen ikke vises i denne browser.",
                 close: "Luk",
+                goBack: "Tilbage",
+                icons: "Du kan få SharePoint til at vise filtype-ikoner ved DWG filer ved at gøre følgende: Kopier først indholdet af følgende boks til clipboardet. Gå derefter tilbage til dit site, rediger siden og tilføj en <strong>Script Editor</strong> web part, som du indsætter teksten fra clipboardet i og gemmer siden.",
                 initializing: "Initializerer\u2026",
                 loading: "Indlæser\u2026",
                 parsing: "Analyserer\u2026"
@@ -26,6 +28,8 @@
                 appTitle: "Klinkby DWG Vorschau",
                 badDrawing: "Leider ist die Zeichnung nicht in diesem Browser betrachtet werden.",
                 close: "Schließe",
+                goBack: "Zurück",
+                icons: "Sie können DWG-Dateityp-Icons in Sharepoint haben: Zuerst den Inhalt der folgenden Feld in die Zwischenablage kopieren. Dann gehen Sie zurück zu Ihrer Website und die Seite zu bearbeiten. Fügen Sie ein <strong>Script Editor</strong> Stegteil und den Inhalt der Zwischenablage einfügen und speichern Sie die Seite.",
                 initializing: "Initialisieren\u2026",
                 loading: "Laden\u2026",
                 parsing: "Parsen\u2026"
@@ -34,6 +38,8 @@
                 appTitle: "Klinkby DWG Preview",
                 badDrawing: "Unfortunately the drawing cannot be previewed in this browser.",
                 close: "Close",
+                goBack: "Go back",
+                icons: "You can have DWG file-type icons in SharePoint by: First copy the contents of the following box to the clipboard. Then go back to your site and edit the page. Add a <strong>Script Editor</strong> web part and paste the contents of the clipboard and save the page.",
                 initializing: "Initializing\u2026",
                 loading: "Loading\u2026",
                 parsing: "Parsing\u2026"
@@ -42,6 +48,8 @@
                 appTitle: "Klinkby DWG Preview",
                 badDrawing: "Unfortunately the drawing cannot be previewed in this browser.",
                 close: "Close",
+                goBack: "Go back",
+                icons: "You can have DWG file-type icons in SharePoint by: First copy the contents of the following box to the clipboard. Then go back to your site and edit the page. Add a <strong>Script Editor</strong> web part and paste the contents of the clipboard and save the page.",
                 initializing: "Initializing\u2026",
                 loading: "Loading\u2026",
                 parsing: "Parsing\u2026"
@@ -50,6 +58,8 @@
                 appTitle: "Klinkby DWG Vista Previa",
                 badDrawing: "Por desgracia, el dibujo no se puede previsualizar en este navegador.",
                 close: "Cerrar",
+                goBack: "Volver",
+                icons: "Usted puede tener los iconos de tipo de archivo DWG en la ciudad de SharePoint: Primero copiar el contenido de la caja følgende hasta portapapeles. Luego regresa a su sitio y editar la página. Añadir un <strong>Script Editor</strong> Fiesta web y pegar el contenido del portapapeles y guardar la página.",
                 initializing: "Inicialización\u2026",
                 loading: "Cargando\u2026",
                 parsing: "Análisis\u2026"
@@ -58,6 +68,8 @@
                 appTitle: "Klinkby Aperçu de DWG",
                 badDrawing: "Malheureusement, le plan ne peut être prévisualisé dans ce navigateur.",
                 close: "Ferme",
+                goBack: "Dos",
+                icons: "Vous pouvez avoir DWG icônes de type de fichier dans SharePoint: Première copier le contenu de la boîte ci-dessous pour le presse-papiers. Puis retournez à votre site et modifier la page. Ajouter un <strong>Script Editor</strong> partie web et collez le contenu du presse-papiers et enregistrez la page.",
                 initializing: "Initialisation\u2026",
                 loading: "Chargement\u2026",
                 parsing: "Parsing\u2026"
@@ -66,6 +78,8 @@
                 appTitle: "Klinkby DWG Forhåndsvisning",
                 badDrawing: "Dessverre tegningen kan ikke forhåndsvises i denne nettleseren.",
                 close: "Lukk",
+                goBack: "Tilbake",
+                icons: "Du kan ha DWG fil-type ikoner i Sharepoint: Først kopiere innholdet i følgende boksen til utklippstavlen. Så gå tilbake til området ditt og redigere siden. Legg en <strong>Script Editor</strong> web del og lime inn innholdet på utklippstavlen og lagre siden.",
                 initializing: "Initialisering\u2026",
                 loading: "Laster\u2026",
                 parsing: "Parsing\u2026"
@@ -74,6 +88,8 @@
                 appTitle: "Klinkby DWG Visning",
                 badDrawing: "Tyvärr ritningen kan inte förhandsgranskas i den här webbläsaren.",
                 close: "Stäng",
+                goBack: "Tillbaka",
+                icons: "Du kan ha DWG ikoner filtypsobjekt i Sharepoint: Först kopiera innehållet i följande ruta till klippbordet. Gå sedan tillbaka till din webbplats och redigera sidan. Lägg till en <strong>Script Editor</strong> webbdelen och klistra in innehållet i Urklipp och spara sidan.",
                 initializing: "Initierar\u2026",
                 loading: "Läser\u2026",
                 parsing: "Parsning\u2026"
@@ -87,15 +103,38 @@
         elements = {
             caption: document.getElementById("caption"),
             appTitle: document.getElementById("appTitle"),
+            goBack: document.getElementById("goBack"),
             preview: document.getElementById("preview"),
             closeDialog: document.getElementById("closeDialog"),
-            hostCss: document.getElementById("hostCss")
+            hostCss: document.getElementById("hostCss"),
+            siteImg: document.getElementById("ctl00_onetidHeadbnnr2")
         };
 
     appTitle.innerHTML = resx.appTitle;
-    if (hostCss) {
-        hostCss.innerHTML = getQueryStringValue("SPAppWebUrl") + "/Content/Host.css";
+    if (elements.hostCss) {
+        elements.hostCss.innerHTML = resx.icons;
     }
+    if (elements.siteImg) {
+        elements.siteImg.src = "../Images/AppIcon.png";
+    }
+    function goBack(evt) {
+        var queryString = {};
+        // parse query string
+        location.href.replace(
+            /([^?=&]+)(=([^&]*))?/g,
+            function ($0, $1, $2, $3) { queryString[decodeURIComponent($1)] = decodeURIComponent($3); }
+        );
+        var hostweburl = queryString["SPHostUrl"];
+        location.href = hostweburl;
+        evt.preventDefault();
+        evt.cancelBubble = true;
+        return false;
+    }
+    if (elements.goBack) {
+        elements.goBack.addEventListener("click", goBack);
+        elements.goBack.innerHTML = resx.goBack;
+    }
+    
     if (null === elements.closeDialog) return;
     closeDialog.innerHTML = resx.close;
     caption.innerHTML = resx.initializing;

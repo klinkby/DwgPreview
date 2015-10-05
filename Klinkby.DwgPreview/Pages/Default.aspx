@@ -15,7 +15,7 @@
 <asp:Content ContentPlaceHolderID="PlaceHolderMain" runat="server">
     <div id="licenseMessage"></div>
 
-    <span id="hostCss"></span>
+    <p id="hostCss"></p>
     <div class="dwg-css">
     <pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">style</span> <span class="attr">type</span><span class="kwrd">="text/css"</span><span class="kwrd">&gt;</span>
 img[alt='dwg File'] {
@@ -28,7 +28,7 @@ img[alt='dwg File'] {
 <span class="kwrd">&lt;/</span><span class="html">style</span><span class="kwrd">&gt;</span>
 </pre>
     </div>
-
+    <button id="goBack" class="dwg-goback"></button>
     <script type="text/javascript" src="../Scripts/App.js" async="async"></script>
     <script type="text/javascript" src="../Scripts/Licensing.js" async="async"></script>
 </asp:Content>

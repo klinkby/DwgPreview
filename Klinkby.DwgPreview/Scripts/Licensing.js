@@ -6,7 +6,6 @@
  */
 (function () {
     "use strict";
-    return;
 
     function getQueryStringValue(key) {
         var res = new RegExp("(?:[\?&]" + encodeURIComponent(key) + "=)([^&]+)").exec(location.search);
